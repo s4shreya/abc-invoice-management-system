@@ -1,0 +1,45 @@
+.container {
+  width: 45%;
+  height: 400px;
+  background-color: rgb(255, 211, 194);
+  margin: 15px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 10px cadetblue;
+  font-size: 20px;
+  color: darkblue;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container p {
+  width: 50%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.actions button {
+  border: none;
+  background-color: transparent;
+  font-size: 30px;
+}
+
+.actions button:nth-child(1) {
+  color: darkmagenta;
+}
+
+.actions button:nth-child(2) {
+  color: darkgreen;
+}
+
+.actions button:nth-child(3) {
+  color: red;
+}
+
+.container:hover {
+  transform: scale(1.05, 1.05);
+}

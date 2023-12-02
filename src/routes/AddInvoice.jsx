@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
@@ -12,6 +13,7 @@ import "../App.css";
 
 import InvoiceItems from "../components/InvoiceItems";
 import InvoiceModal from "../components/InvoiceModal";
+import { addInvoice } from "../reducers/InvoiceSlice";
 
 const AddInvoice = () => {
   const [invoice, setInvoice] = useState({
@@ -45,22 +47,24 @@ const AddInvoice = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleRowDel = (items) => {
     let index = invoice.items.indexOf(items);
-    invoice.items.splice(index, 1);
-    setInvoice({ ...invoice, items: items });
+    let newItems = invoice.items.filter((item, i) => i !== index);
+    setInvoice({ ...invoice, items: newItems });
   };
 
   const handleAddEvent = (evt) => {
     let id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    let items = {
+    let item = {
       id: id,
       name: "",
       price: "1.00",
       description: "",
       quantity: 1,
     };
-    setInvoice({ ...invoice, items: [...items, items] });
+    setInvoice({ ...invoice, items: [...invoice.items, item] });
   };
 
   const handleCalculateTotal = () => {
@@ -113,6 +117,7 @@ const AddInvoice = () => {
     event.preventDefault();
     handleCalculateTotal();
     setIsModalOpen(true);
+    dispatch(addInvoice(invoice))
     console.log(`in submit ${JSON.stringify(invoice)}`);
   };
 

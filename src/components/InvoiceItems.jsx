@@ -7,17 +7,15 @@ const InvoiceItems = (props) => {
   let onItemizedItemEdit = props.onItemizedItemEdit;
   let currency = props.currency;
   let rowDel = props.onRowDel;
-  let itemTable = props.items.map((item) => {
-    return (
-      <InvoiceItemRow
-        onItemizedItemEdit={onItemizedItemEdit}
-        item={item}
-        onDelEvent={rowDel}
-        key={item.id}
-        currency={currency}
-      />
-    );
-  });
+  let itemTable = props.items.map((item) => (
+    <InvoiceItemRow
+      onItemizedItemEdit={onItemizedItemEdit}
+      item={item}
+      onDelEvent={rowDel}
+      key={item.id}
+      currency={currency}
+    />
+  ));
   return (
     <div>
       <Table>

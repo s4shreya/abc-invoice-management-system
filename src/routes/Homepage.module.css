@@ -1,0 +1,12 @@
+.menu {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: 10px auto;
+    background-color: cornflowerblue;
+    padding: 10px;
+}
+
+.add-button {
+    font-size: 30px;
+}

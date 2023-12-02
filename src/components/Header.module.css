@@ -4,7 +4,7 @@
   padding: 20px;
 }
 
-.name {
+.name a {
   color: darkslategray;
   font-size: 40px;
   font-weight: 700;
@@ -12,9 +12,9 @@
   text-decoration: none;
 }
 
-.name:hover {
+.name a:hover {
   transform: scale(1.05, 1.05);
   color: palevioletred;
   text-shadow: 2px 2px black;
-  cursor: default;
+  cursor: pointer;
 }
