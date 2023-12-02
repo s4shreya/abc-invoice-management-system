@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import { BiPaperPlane, BiCloudDownload } from "react-icons/bi";
+import { IoClose } from "react-icons/io5";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
@@ -35,6 +36,10 @@ const InvoiceModal = (props) => {
         centered
       >
         <div id="invoiceCapture">
+          <IoClose
+            style={{ float: "right", margin: 10, cursor: "pointer" }}
+            onClick={props.closeModal}
+          />
           <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
             <div className="w-100">
               <h4 className="fw-bold my-2">

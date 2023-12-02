@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
@@ -13,38 +14,34 @@ import "../App.css";
 
 import InvoiceItems from "../components/InvoiceItems";
 import InvoiceModal from "../components/InvoiceModal";
-import { addInvoice } from "../reducers/InvoiceSlice";
+import { editInvoice } from "../reducers/InvoiceSlice";
 import { useSelector } from "react-redux";
 
-const AddInvoice = () => {
-  const invoiceNo = useSelector(state => state.invoices.invoices.length + 1)
+const EditInvoice = (props) => {
+  const { id } = useParams();
+  const invoiceDetails = useSelector(
+    (state) => state.invoices.invoices[id - 1]
+  );
+  console.log(`in edit ${JSON.stringify(invoiceDetails)}`);
   const [invoice, setInvoice] = useState({
-    currency: "₹",
-    currentDate: "",
-    invoiceNumber: invoiceNo,
-    dateOfIssue: "",
-    billTo: "",
-    billToEmail: "",
-    billToAddress: "",
-    billFrom: "",
-    billFromEmail: "",
-    billFromAddress: "",
-    notes: "",
-    total: "0.00",
-    subTotal: "0.00",
-    taxRate: "",
-    taxAmmount: "0.00",
-    discountRate: "",
-    discountAmmount: "0.00",
-    items: [
-      {
-        id: 0,
-        name: "",
-        description: "",
-        price: "1.00",
-        quantity: 1,
-      },
-    ],
+    currency: invoiceDetails.currency,
+    currentDate: invoiceDetails.currentDate,
+    invoiceNumber: invoiceDetails.invoiceNumber,
+    dateOfIssue: invoiceDetails.dateOfIssue,
+    billTo: invoiceDetails.billTo,
+    billToEmail: invoiceDetails.billToEmail,
+    billToAddress: invoiceDetails.billToAddress,
+    billFrom: invoiceDetails.billFrom,
+    billFromEmail: invoiceDetails.billFromEmail,
+    billFromAddress: invoiceDetails.billFromAddress,
+    notes: invoiceDetails.notes,
+    total: invoiceDetails.total,
+    subTotal: invoiceDetails.subTotal,
+    taxRate: invoiceDetails.taxRate,
+    taxAmmount: invoiceDetails.taxAmmount,
+    discountRate: invoiceDetails.discountRate,
+    discountAmmount: invoiceDetails.discountAmmount,
+    items: invoiceDetails.items,
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -119,8 +116,7 @@ const AddInvoice = () => {
     event.preventDefault();
     handleCalculateTotal();
     setIsModalOpen(true);
-    dispatch(addInvoice(invoice))
-    console.log(`in submit ${JSON.stringify(invoice)}`);
+    dispatch(editInvoice(invoice));
   };
 
   return (
@@ -439,4 +435,4 @@ const AddInvoice = () => {
     </div>
   );
 };
-export default AddInvoice;
+export default EditInvoice;
