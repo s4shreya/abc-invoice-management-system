@@ -1,0 +1,26 @@
+.table {
+  width: 100%;
+  border: 5px solid cornflowerblue;
+  border-radius: 10px;
+}
+
+.table-heading {
+  font-size: 25px;
+  color: purple;
+  background-color: rgb(152, 251, 241);
+}
+.table-body {
+  font-size: 19px;
+  font-weight: 600;
+  color: aliceblue;
+  background-color: lightcoral;
+}
+
+.table-heading th,
+.table-body td {
+  padding: 10px 5px;
+}
+
+.table-body tr:nth-child(even) {
+  background-color: lightslategray;
+}

@@ -1,0 +1,17 @@
+.actions button {
+    border: none;
+    background-color: transparent;
+    font-size: 30px;
+  }
+  
+  .actions button:nth-child(1) {
+    color: darkmagenta;
+  }
+  
+  .actions button:nth-child(2) {
+    color: darkgreen;
+  }
+  
+  .actions button:nth-child(3) {
+    color: red;
+  }
