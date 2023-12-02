@@ -1,0 +1,20 @@
+.header {
+  background-color: palegreen;
+  text-align: center;
+  padding: 20px;
+}
+
+.name {
+  color: darkslategray;
+  font-size: 40px;
+  font-weight: 700;
+  text-shadow: 2px 2px cadetblue;
+  text-decoration: none;
+}
+
+.name:hover {
+  transform: scale(1.05, 1.05);
+  color: palevioletred;
+  text-shadow: 2px 2px black;
+  cursor: default;
+}
