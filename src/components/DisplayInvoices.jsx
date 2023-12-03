@@ -1,13 +1,22 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteInvoice, editInvoice } from "../reducers/InvoiceSlice";
+import { getInvoices } from "../actions/invoices";
 
 import CardView from "./CardView";
 import TableView from "./TableView";
-import styles from './DisplayInvoices.module.css';
+import styles from "./DisplayInvoices.module.css";
 
 const DisplayInvoices = ({ type }) => {
   const dispatch = useDispatch();
-  const invoiceList = useSelector((state) => state.invoices.invoices);
+  const invoiceList = Object.values(
+    useSelector((state) => state.invoices.invoices)
+  );
+
+  useEffect(() => {
+    dispatch(getInvoices());
+  }, [dispatch]);
+
   const removeInvoice = (id) => {
     dispatch(deleteInvoice(id));
   };
@@ -32,16 +41,16 @@ const DisplayInvoices = ({ type }) => {
               <th>Actions</th>
             </tr>
           </thead>
-          
-    <tbody className={styles["table-body"]}>
-          {invoiceList.map((invoice, index) => (
-            <TableView
-              key={index}
-              invoice={invoice}
-              deleteInvoice={removeInvoice}
-              editInvoice={editInvoice}
-            />
-          ))}
+
+          <tbody className={styles["table-body"]}>
+            {invoiceList.map((invoice, index) => (
+              <TableView
+                key={index}
+                invoice={invoice}
+                deleteInvoice={removeInvoice}
+                editInvoice={editInvoice}
+              />
+            ))}
           </tbody>
         </table>
       )}

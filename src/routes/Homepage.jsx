@@ -11,7 +11,7 @@ const Homepage = () => {
       <Link to="/add-invoice" className={styles["add-button"]}><IoMdAddCircleOutline />Add Invoice</Link>
       </div>
       <div>
-        <DisplayInvoices type="table" />
+        <DisplayInvoices type="card" />
       </div>
     </div>
   );

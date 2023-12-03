@@ -15,6 +15,7 @@ import InvoiceItems from "../components/InvoiceItems";
 import InvoiceModal from "../components/InvoiceModal";
 import { addInvoice } from "../reducers/InvoiceSlice";
 import { useSelector } from "react-redux";
+import { createInvoice } from "../actions/invoices";
 
 const AddInvoice = () => {
   const invoiceNo = useSelector(state => state.invoices.invoices.length + 1)
@@ -39,7 +40,7 @@ const AddInvoice = () => {
     items: [
       {
         id: 0,
-        name: "",
+        name: "hello",
         description: "",
         price: "1.00",
         quantity: 1,
@@ -48,7 +49,6 @@ const AddInvoice = () => {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const dispatch = useDispatch();
 
   const handleRowDel = (items) => {
@@ -111,6 +111,7 @@ const AddInvoice = () => {
       }
       return items;
     });
+    console.log(`in itemized ${JSON.stringify(newItems)}`)
     setInvoice({ ...invoice, items: [...items, newItems] });
     handleCalculateTotal();
   };
@@ -119,7 +120,8 @@ const AddInvoice = () => {
     event.preventDefault();
     handleCalculateTotal();
     setIsModalOpen(true);
-    dispatch(addInvoice(invoice))
+    dispatch(createInvoice(invoice))
+    // dispatch(addInvoice(invoice))
     console.log(`in submit ${JSON.stringify(invoice)}`);
   };
 
