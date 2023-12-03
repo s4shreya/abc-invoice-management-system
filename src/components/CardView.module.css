@@ -1,8 +1,8 @@
 .container {
-  width: 45%;
-  height: 400px;
+  width: 30%;
+  height: 350px;
   background-color: rgb(255, 211, 194);
-  margin: 15px;
+  margin: 30px 20px;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 10px 10px 10px cadetblue;
@@ -42,4 +42,24 @@
 
 .container:hover {
   transform: scale(1.05, 1.05);
+}
+
+@media screen and (max-width: 768px) {
+  .actions button {
+    font-size: 20px;
+  }
+  .container {
+    font-size: 15px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .actions button {
+    font-size: 25px;
+  }
+  .container {
+    font-size: 20px;
+    width: 40%;
+  }
 }

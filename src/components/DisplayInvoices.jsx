@@ -27,12 +27,12 @@ const DisplayInvoices = ({ type }) => {
 
   return (
     <div className="">
-      Invoices
+      <h3 className={styles.heading}>Invoices</h3>
       {type === "table" && (
         <table className={styles.table}>
           <thead className={styles["table-heading"]}>
             <tr>
-              <th>Invoice No.</th>
+              <th>S. No.</th>
               <th>Date</th>
               <th>Bill from</th>
               <th>Bill to</th>
@@ -54,8 +54,9 @@ const DisplayInvoices = ({ type }) => {
           </tbody>
         </table>
       )}
-      {type === "card" &&
-        invoiceList.map((invoice, index) => (
+      {type === "card" && (
+      <div className={styles.container}>
+        {invoiceList.map((invoice, index) => (
           <CardView
             key={index}
             invoice={invoice}
@@ -63,6 +64,8 @@ const DisplayInvoices = ({ type }) => {
             editInvoice={editInvoice}
           />
         ))}
+        </div>)
+        }
     </div>
   );
 };

@@ -1,12 +1,37 @@
 .menu {
     display: flex;
     justify-content: center;
-    width: 50%;
+    width: 30%;
     margin: 10px auto;
-    background-color: cornflowerblue;
+    background-color: khaki;
     padding: 10px;
+    border-radius: 20px;
+    box-shadow:  10px 10px 10px thistle;
 }
 
 .add-button {
     font-size: 30px;
+    float: right;
+}
+
+.menu-items {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-items li {
+    display: inline;
+}
+
+.menu-items button {
+    background: darkslategray;
+    border: none;
+    font-size: 25px;
+    color: aliceblue;
+    border-radius: 30px;
+    width: 100px;
+    padding: 5px;
+    font-weight: 600;
+    margin: 0 10px;
 }

@@ -40,7 +40,7 @@ const CardView = (props) => {
           <br />
           View
         </button>
-        <Link to={`/edit-invoice/${invoice.invoiceNumber}`}>sample</Link>
+        {/* <Link to={`/edit-invoice/${invoice.invoiceNumber}`}>sample</Link> */}
         <button>
           <FaEdit />
           <br />

@@ -1,5 +1,6 @@
 .table {
-  width: 100%;
+  margin: 30px auto;
+  width: 95%;
   border: 5px solid cornflowerblue;
   border-radius: 10px;
 }
@@ -23,4 +24,16 @@
 
 .table-body tr:nth-child(even) {
   background-color: lightslategray;
+}
+
+.heading {
+  text-align: center;
+  font-size: 35px;
+  color: crimson;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
