@@ -17,13 +17,29 @@ export const createInvoice = createAsyncThunk(
 );
 
 // action for fetching invoices
-export const getInvoices = createAsyncThunk("invoices/getInvoices", async () => {
+export const getInvoices = createAsyncThunk(
+  "invoices/getInvoices",
+  async () => {
     try {
-        const { data } =  await api.getInvoices();
-        return data;
+      const { data } = await api.getInvoices();
+      return data;
+    } catch (error) {
+      console.log(`Error occurred ${error}`);
+      return error.message;
     }
-    catch (error) {
-        console.log(`Error occurred ${error}`);
-        return error.message;
+  }
+);
+
+// action for removing invoice with the given id
+export const deleteInvoice = createAsyncThunk(
+  "invoices/deleteInvoice",
+  async (id) => {
+    try {
+      await api.deleteInvoice(id);
+      return id;
+    } catch (error) {
+      console.log(`Error occurred ${error}`);
+      return error.message;
     }
-});
+  }
+);

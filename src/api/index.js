@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const BASE_URL =
-  "https://abc-invoice-management-system-default-rtdb.firebaseio.com/invoices.json";
+  "https://abc-invoice-management-system-default-rtdb.firebaseio.com";
 
-export const createInvoice = (newInvoice) => axios.post(BASE_URL, newInvoice);
-export const getInvoices = () => axios.get(BASE_URL);
+export const createInvoice = (newInvoice) => axios.post(`${BASE_URL}/invoices.json`, newInvoice);
+export const getInvoices = () => axios.get(`${BASE_URL}/invoices.json`);
+export const deleteInvoice = id => axios.delete(`${BASE_URL}/invoices/${id}.json`);

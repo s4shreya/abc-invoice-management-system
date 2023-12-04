@@ -22,7 +22,7 @@ const AddInvoice = () => {
   const [invoice, setInvoice] = useState({
     currency: "₹",
     currentDate: "",
-    invoiceNumber: invoiceNo,
+    invoiceNumber: invoiceNo || 1,
     dateOfIssue: "",
     billTo: "",
     billToEmail: "",

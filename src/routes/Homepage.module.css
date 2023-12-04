@@ -10,8 +10,22 @@
 }
 
 .add-button {
+    position: absolute;
+    right: 10px;
+    margin: 10px;
+    text-decoration: none;
     font-size: 30px;
-    float: right;
+    color: midnightblue;
+    font-weight: 600;
+    text-shadow: 3px 3px 5px cadetblue;
+}
+
+.add-button svg {
+    position: relative;
+    margin: 5px;
+    bottom: 2px;
+    font-size: 40px;
+    color: darkcyan;
 }
 
 .menu-items {

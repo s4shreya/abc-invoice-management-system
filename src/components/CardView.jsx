@@ -9,13 +9,12 @@ import { Link } from "react-router-dom";
 
 const CardView = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const invoice = props.invoice;
 
+  const invoice = props.invoice;
 
   const viewInvoiceHandler = () => setIsModalOpen(true);
   const deleteInvoiceHandler = () => {
-    props.deleteInvoice(invoice.invoiceNumber);
+    props.deleteInvoice(props.id);
   };
 
   return (

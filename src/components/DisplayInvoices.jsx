@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteInvoice, editInvoice } from "../reducers/InvoiceSlice";
-import { getInvoices } from "../actions/invoices";
+import { editInvoice } from "../reducers/InvoiceSlice";
+import { getInvoices, deleteInvoice } from "../actions/invoices";
 
 import CardView from "./CardView";
 import TableView from "./TableView";
@@ -9,9 +9,7 @@ import styles from "./DisplayInvoices.module.css";
 
 const DisplayInvoices = ({ type }) => {
   const dispatch = useDispatch();
-  const invoiceList = Object.values(
-    useSelector((state) => state.invoices.invoices)
-  );
+  const invoiceList = useSelector((state) => state.invoices.invoices);
 
   useEffect(() => {
     dispatch(getInvoices());
@@ -27,7 +25,7 @@ const DisplayInvoices = ({ type }) => {
 
   return (
     <div className="">
-      <h3 className={styles.heading}>Invoices</h3>
+      <h3 className={styles.heading}>Invoices List</h3>
       {type === "table" && (
         <table className={styles.table}>
           <thead className={styles["table-heading"]}>
@@ -43,10 +41,11 @@ const DisplayInvoices = ({ type }) => {
           </thead>
 
           <tbody className={styles["table-body"]}>
-            {invoiceList.map((invoice, index) => (
+            {invoiceList.map((invoice) => (
               <TableView
-                key={index}
-                invoice={invoice}
+                key={invoice.id}
+                id={invoice.id}
+                invoice={invoice.data}
                 deleteInvoice={removeInvoice}
                 editInvoice={editInvoice}
               />
@@ -55,17 +54,18 @@ const DisplayInvoices = ({ type }) => {
         </table>
       )}
       {type === "card" && (
-      <div className={styles.container}>
-        {invoiceList.map((invoice, index) => (
-          <CardView
-            key={index}
-            invoice={invoice}
-            deleteInvoice={removeInvoice}
-            editInvoice={editInvoice}
-          />
-        ))}
-        </div>)
-        }
+        <div className={styles.container}>
+          {invoiceList.map((invoice) => (
+            <CardView
+              key={invoice.id}
+              id={invoice.id}
+              invoice={invoice.data}
+              deleteInvoice={removeInvoice}
+              editInvoice={editInvoice}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

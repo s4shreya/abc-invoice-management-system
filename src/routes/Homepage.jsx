@@ -8,6 +8,10 @@ const Homepage = () => {
   const [viewType, setViewType] = useState("card");
   return (
     <div className={styles.container}>
+      <Link to="/add-invoice" className={styles["add-button"]}>
+        <IoMdAddCircleOutline />
+        Add Invoice
+      </Link>
       <div className={styles.menu}>
         <nav>
           <ul className={styles["menu-items"]}>
@@ -20,10 +24,6 @@ const Homepage = () => {
           </ul>
         </nav>
       </div>
-        <Link to="/add-invoice" className={styles["add-button"]}>
-          <IoMdAddCircleOutline />
-          Add Invoice
-        </Link>
       <div>
         <DisplayInvoices type={viewType} />
       </div>
