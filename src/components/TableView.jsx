@@ -14,7 +14,8 @@ const TableView = (props) => {
 
   const viewInvoiceHandler = () => setIsModalOpen(true);
   const deleteInvoiceHandler = () => {
-    props.deleteInvoice(invoice.invoiceNumber);
+    if (window.confirm("Are you sure you want to delete this invoice?"))
+      props.deleteInvoice(props.id);
   };
 
   return (
@@ -24,19 +25,19 @@ const TableView = (props) => {
         <td>{invoice.dateOfIssue}</td>
         <td>{invoice.billFrom}</td>
         <td>{invoice.billTo}</td>
-        <td>{invoice.items.length}</td>
+        <td>{invoice.items === undefined ? 0 : invoice.items.length}</td>
         <td>{invoice.total}</td>
         <td className={styles.actions}>
             <button onClick={viewInvoiceHandler}>
               <FaEye />
             </button>
-            <Link to={`/edit-invoice/${invoice.invoiceNumber}`}>sample</Link>
             <button>
-              <FaEdit />
-            </button>
-            <button onClick={deleteInvoiceHandler}>
-              <MdDelete /> 
-            </button>
+          
+          <Link to={`/edit-invoice/${props.id}`}><FaEdit /></Link>
+        </button>
+        <button onClick={deleteInvoiceHandler}>
+          <MdDelete /> <br />
+        </button>
         </td>
       </tr>
 

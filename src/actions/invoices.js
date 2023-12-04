@@ -43,3 +43,16 @@ export const deleteInvoice = createAsyncThunk(
     }
   }
 );
+
+// action for updating invoice
+export const editInvoice = createAsyncThunk("invoices/editInvoice", async (updatedInvoice) => {
+  try {
+    const { data } = await api.editInvoice(updatedInvoice.id, updatedInvoice.data);
+    console.log(`in actions ${JSON.stringify(data)}`);
+    return updatedInvoice;
+  }
+  catch (error) {
+    console.log(`Error occurred ${error}`)
+    return error.message;
+  }
+});

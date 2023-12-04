@@ -9,7 +9,11 @@ import styles from "./DisplayInvoices.module.css";
 
 const DisplayInvoices = ({ type }) => {
   const dispatch = useDispatch();
-  const invoiceList = useSelector((state) => state.invoices.invoices);
+  const invoiceListDefault = useSelector((state) => state.invoices.invoices);
+  let invoiceList = [...invoiceListDefault];
+  
+        
+  invoiceList.sort((a, b) => a.data.invoiceNumber - b.data.invoiceNumber);
 
   useEffect(() => {
     dispatch(getInvoices());
@@ -19,7 +23,7 @@ const DisplayInvoices = ({ type }) => {
     dispatch(deleteInvoice(id));
   };
 
-  const editInvoice = (invoice) => {
+  const editInvoice = (id, invoice) => {
     dispatch(editInvoice(invoice));
   };
 

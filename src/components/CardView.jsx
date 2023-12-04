@@ -14,7 +14,8 @@ const CardView = (props) => {
 
   const viewInvoiceHandler = () => setIsModalOpen(true);
   const deleteInvoiceHandler = () => {
-    props.deleteInvoice(props.id);
+    if (window.confirm("Are you sure you want to delete this invoice?"))
+      props.deleteInvoice(props.id);
   };
 
   return (
@@ -31,7 +32,9 @@ const CardView = (props) => {
         <br />
         {invoice.billTo}
       </p>
-      <p>Total Items: {invoice.items.length}</p>
+      <p>
+        Total Items: {invoice.items === undefined ? 0 : invoice.items.length}
+      </p>
       <p>Total Amount: {invoice.total}</p>
       <div className={styles.actions}>
         <button onClick={viewInvoiceHandler}>
@@ -39,11 +42,10 @@ const CardView = (props) => {
           <br />
           View
         </button>
-        {/* <Link to={`/edit-invoice/${invoice.invoiceNumber}`}>sample</Link> */}
         <button>
           <FaEdit />
           <br />
-          Edit
+          <Link to={`/edit-invoice/${props.id}`}>Edit</Link>
         </button>
         <button onClick={deleteInvoiceHandler}>
           <MdDelete /> <br />

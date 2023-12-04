@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
@@ -14,17 +14,23 @@ import "../App.css";
 
 import InvoiceItems from "../components/InvoiceItems";
 import InvoiceModal from "../components/InvoiceModal";
-import { editInvoice } from "../reducers/InvoiceSlice";
+import { editInvoice } from "../actions/invoices";
 import { useSelector } from "react-redux";
 
-const EditInvoice = (props) => {
+const EditInvoice = () => {
   const { id } = useParams();
-  const invoiceDetails = useSelector(
-    (state) => state.invoices.invoices[id - 1]
-  );
-  console.log(`in edit ${JSON.stringify(invoiceDetails)}`);
+  const invoiceList = useSelector((state) => state.invoices.invoices);
+  let invoiceDetails = {};
+
+  for (let key in invoiceList) {
+    if (invoiceList[key].id === id) {
+      invoiceDetails = invoiceList[key].data;
+    }
+  }
+  console.log(`in editttt ${JSON.stringify(invoiceDetails)}`);
+
   const [invoice, setInvoice] = useState({
-    currency: invoiceDetails.currency,
+    currency: invoiceDetails.currency || "$",
     currentDate: invoiceDetails.currentDate,
     invoiceNumber: invoiceDetails.invoiceNumber,
     dateOfIssue: invoiceDetails.dateOfIssue,
@@ -41,12 +47,13 @@ const EditInvoice = (props) => {
     taxAmmount: invoiceDetails.taxAmmount,
     discountRate: invoiceDetails.discountRate,
     discountAmmount: invoiceDetails.discountAmmount,
-    items: invoiceDetails.items,
+    items: invoiceDetails.items || [],
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleRowDel = (items) => {
     let index = invoice.items.indexOf(items);
@@ -116,7 +123,12 @@ const EditInvoice = (props) => {
     event.preventDefault();
     handleCalculateTotal();
     setIsModalOpen(true);
-    dispatch(editInvoice(invoice));
+    const updatedInvoice = {
+      id: id,
+      data: { ...invoice },
+    };
+    dispatch(editInvoice(updatedInvoice));
+    navigate("/")
   };
 
   return (
@@ -349,7 +361,7 @@ const EditInvoice = (props) => {
                   type="submit"
                   className="d-block w-100"
                 >
-                  Review Invoice
+                  Submit Invoice
                 </Button>
                 <InvoiceModal
                   showModal={isModalOpen}
