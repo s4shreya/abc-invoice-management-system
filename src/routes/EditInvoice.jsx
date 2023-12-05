@@ -74,15 +74,13 @@ const EditInvoice = () => {
 
   const handleCalculateTotal = () => {
     let items = invoice.items;
-    let subTotal = 0;
+    let subTotal = items.reduce(
+      (acc, item) =>
+        acc +
+        parseFloat(item.price).toFixed(2) * parseInt(item.quantity).toFixed(2),
+      0
+    );
 
-    items.map((items) => {
-      subTotal = parseFloat(
-        subTotal + parseFloat(items.price).toFixed(2) * parseInt(items.quantity)
-      ).toFixed(2);
-    });
-
-    setInvoice({ ...invoice, subTotal: parseFloat(subTotal).toFixed(2) });
     let tax = parseFloat(
       parseFloat(subTotal) * (invoice.taxRate / 100)
     ).toFixed(2);
@@ -93,6 +91,7 @@ const EditInvoice = () => {
       subTotal - invoice.discountAmmount + parseFloat(invoice.taxAmmount);
     setInvoice({
       ...invoice,
+      subTotal: parseFloat(subTotal).toFixed(2),
       taxAmmount: tax,
       discountAmmount: discount,
       total: total,

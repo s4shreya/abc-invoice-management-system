@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editInvoice } from "../reducers/InvoiceSlice";
 import { getInvoices, deleteInvoice } from "../actions/invoices";
 
 import { FaChevronCircleDown } from "react-icons/fa";
