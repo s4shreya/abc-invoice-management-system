@@ -16,9 +16,7 @@ export const InvoiceSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createInvoice.fulfilled, (state, action) => {
-        state.invoices = [action.payload, ...state.invoices];
-      })
+      .addCase(createInvoice.fulfilled, (state, action) => {})
       .addCase(getInvoices.fulfilled, (state, action) => {
         const invoicesList = [];
         for (let key in action.payload) {

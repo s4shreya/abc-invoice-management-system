@@ -11,26 +11,25 @@ import TableView from "./TableView";
 import styles from "./DisplayInvoices.module.css";
 
 const DisplayInvoices = ({ type }) => {
-  const [ sortType, setSortType ] = useState("default");
+  const [sortType, setSortType] = useState("default");
   const dispatch = useDispatch();
-  const invoiceListDefault = useSelector((state) => state.invoices.invoices);
-  
-  let invoiceList = [];
-  if(sortType === "default") {
-    invoiceList = [...invoiceListDefault];
-  }
-  else if(sortType === "increasing") {
-    console.log(`in increasin`)
-    invoiceList.sort((a, b) => a.data.invoiceNumber - b.data.invoiceNumber)
-    console.log(`in display ${JSON.stringify(invoiceList)}`)
-  }
-  else if(sortType === "decreasing") {
-    invoiceList.sort((a, b) => b.data.invoiceNumber - a.data.invoiceNumber)
+  let invoiceList = useSelector((state) => state.invoices.invoices);
+
+  console.log(`in diaplay count is ${invoiceList.length} ${JSON.stringify(invoiceList[invoiceList.length - 1])}`)
+
+  if (sortType === "increasing") {
+    invoiceList = invoiceList
+      .slice()
+      .sort((a, b) => a.data.invoiceNumber - b.data.invoiceNumber);
+  } else if (sortType === "decreasing") {
+    invoiceList = invoiceList
+      .slice()
+      .sort((a, b) => b.data.invoiceNumber - a.data.invoiceNumber);
   }
 
   useEffect(() => {
     dispatch(getInvoices());
-  }, [dispatch]);
+  });
 
   const removeInvoice = (id) => {
     dispatch(deleteInvoice(id));
@@ -39,7 +38,6 @@ const DisplayInvoices = ({ type }) => {
   const editInvoice = (id, invoice) => {
     dispatch(editInvoice(invoice));
   };
-
 
   return (
     <div className={styles.parent}>
@@ -50,7 +48,10 @@ const DisplayInvoices = ({ type }) => {
         </button>
         <div className={styles["dropdown-content"]}>
           <ul>
-            <li style={{ borderBottom: "1px solid cadetblue" }} onClick={() => setSortType("increasing")}>
+            <li
+              style={{ borderBottom: "1px solid cadetblue" }}
+              onClick={() => setSortType("increasing")}
+            >
               Increasing
               <FaArrowUp style={{ left: "10px" }} />
             </li>

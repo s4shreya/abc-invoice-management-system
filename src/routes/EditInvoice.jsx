@@ -27,7 +27,6 @@ const EditInvoice = () => {
       invoiceDetails = invoiceList[key].data;
     }
   }
-  console.log(`in editttt ${JSON.stringify(invoiceDetails)}`);
 
   const [invoice, setInvoice] = useState({
     currency: invoiceDetails.currency || "$",

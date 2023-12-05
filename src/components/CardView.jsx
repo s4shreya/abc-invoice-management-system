@@ -43,9 +43,11 @@ const CardView = (props) => {
           View
         </button>
         <button>
-          <FaEdit />
-          <br />
-          <Link to={`/edit-invoice/${props.id}`}>Edit</Link>
+          <Link to={`/edit-invoice/${props.id}`}>
+            <FaEdit />
+            <br />
+            Edit
+          </Link>
         </button>
         <button onClick={deleteInvoiceHandler}>
           <MdDelete /> <br />

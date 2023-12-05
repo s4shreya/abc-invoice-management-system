@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
@@ -13,12 +14,11 @@ import "../App.css";
 
 import InvoiceItems from "../components/InvoiceItems";
 import InvoiceModal from "../components/InvoiceModal";
-import { addInvoice } from "../reducers/InvoiceSlice";
 import { useSelector } from "react-redux";
 import { createInvoice } from "../actions/invoices";
 
 const AddInvoice = () => {
-  const invoiceNo = useSelector(state => state.invoices.invoices.length + 1)
+  const invoiceNo = useSelector((state) => state.invoices.invoices.length + 1);
   const [invoice, setInvoice] = useState({
     currency: "₹",
     currentDate: "",
@@ -37,19 +37,12 @@ const AddInvoice = () => {
     taxAmmount: "0.00",
     discountRate: "",
     discountAmmount: "0.00",
-    items: [
-      {
-        id: 0,
-        name: "hello",
-        description: "",
-        price: "1.00",
-        quantity: 1,
-      },
-    ],
+    items: [],
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleRowDel = (items) => {
     let index = invoice.items.indexOf(items);
@@ -71,15 +64,13 @@ const AddInvoice = () => {
 
   const handleCalculateTotal = () => {
     let items = invoice.items;
-    let subTotal = 0;
+    let subTotal = items.reduce(
+      (acc, item) =>
+        acc +
+        parseFloat(item.price).toFixed(2) * parseInt(item.quantity).toFixed(2),
+      0
+    );
 
-    items.map((items) => {
-      subTotal = parseFloat(
-        subTotal + parseFloat(items.price).toFixed(2) * parseInt(items.quantity)
-      ).toFixed(2);
-    });
-
-    setInvoice({ ...invoice, subTotal: parseFloat(subTotal).toFixed(2) });
     let tax = parseFloat(
       parseFloat(subTotal) * (invoice.taxRate / 100)
     ).toFixed(2);
@@ -90,6 +81,7 @@ const AddInvoice = () => {
       subTotal - invoice.discountAmmount + parseFloat(invoice.taxAmmount);
     setInvoice({
       ...invoice,
+      subTotal: parseFloat(subTotal).toFixed(2),
       taxAmmount: tax,
       discountAmmount: discount,
       total: total,
@@ -111,8 +103,7 @@ const AddInvoice = () => {
       }
       return items;
     });
-    console.log(`in itemized ${JSON.stringify(newItems)}`)
-    setInvoice({ ...invoice, items: [...items, newItems] });
+    setInvoice({ ...invoice, items: [...invoice.items, ...newItems] });
     handleCalculateTotal();
   };
 
@@ -120,15 +111,20 @@ const AddInvoice = () => {
     event.preventDefault();
     handleCalculateTotal();
     setIsModalOpen(true);
-    dispatch(createInvoice(invoice))
-    // dispatch(addInvoice(invoice))
-    console.log(`in submit ${JSON.stringify(invoice)}`);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    handleCalculateTotal();
+    dispatch(createInvoice(invoice));
+    console.log(`in submit handler`);
+    navigate("/");
   };
 
   return (
     <div className="App d-flex flex-column align-items-center justify-content-center w-100">
       <Container>
-        <Form onSubmit={openModal}>
+        <Form onSubmit={submitHandler}>
           <Row>
             <Col md={8} lg={9}>
               <Card className="p-4 p-xl-5 my-3 my-xl-4">
@@ -352,14 +348,16 @@ const AddInvoice = () => {
               <div className="sticky-top pt-md-3 pt-xl-4">
                 <Button
                   letiant="primary"
-                  type="submit"
+                  // type="submit"
                   className="d-block w-100"
+                  onClick={openModal}
                 >
                   Review Invoice
                 </Button>
                 <InvoiceModal
                   showModal={isModalOpen}
                   closeModal={() => setIsModalOpen(false)}
+                  navigate={true}
                   info={invoice}
                   items={invoice.items}
                   currency={invoice.currency}
@@ -395,9 +393,13 @@ const AddInvoice = () => {
                       name="taxRate"
                       type="number"
                       value={invoice.taxRate}
-                      onChange={(event) =>
-                        setInvoice({ ...invoice, taxRate: event.target.value })
-                      }
+                      onChange={(event) => {
+                        handleCalculateTotal();
+                        return setInvoice({
+                          ...invoice,
+                          taxRate: event.target.value,
+                        });
+                      }}
                       className="bg-white border"
                       placeholder="0.0"
                       min="0.00"
@@ -416,12 +418,13 @@ const AddInvoice = () => {
                       name="discountRate"
                       type="number"
                       value={invoice.discountRate}
-                      onChange={(event) =>
-                        setInvoice({
+                      onChange={(event) => {
+                        handleCalculateTotal();
+                        return setInvoice({
                           ...invoice,
                           discountRate: event.target.value,
-                        })
-                      }
+                        });
+                      }}
                       className="bg-white border"
                       placeholder="0.0"
                       min="0.00"
@@ -433,6 +436,15 @@ const AddInvoice = () => {
                     </InputGroup.Text>
                   </InputGroup>
                 </Form.Group>
+                <hr style={{ marginBottom: "200px" }} />
+                <Button
+                  variant="success"
+                  className="my-6 d-block w-100 pt-20"
+                  // onClick={submitHandler}
+                  type="submit"
+                >
+                  Submit
+                </Button>
               </div>
             </Col>
           </Row>

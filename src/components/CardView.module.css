@@ -28,11 +28,16 @@
   font-size: 30px;
 }
 
+.actions button a {
+  text-decoration: none;
+  font-size: 30px;
+}
+
 .actions button:nth-child(1) {
   color: darkmagenta;
 }
 
-.actions button:nth-child(2) {
+.actions button:nth-child(2), button a {
   color: darkgreen;
 }
 
@@ -45,7 +50,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .actions button {
+  .actions button, .actions button a {
     font-size: 20px;
   }
   .container {
@@ -55,7 +60,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .actions button {
+  .actions button, .actions button a {
     font-size: 25px;
   }
   .container {
